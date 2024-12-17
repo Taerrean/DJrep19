@@ -34,3 +34,9 @@ class Product(models.Model):
     amount = models.IntegerField()
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     customer = models.ManyToManyField(Customer, related_name='products')
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -5,6 +5,16 @@ from .models import *
 
 # Create your views here.
 
+from django.shortcuts import render
+from django.http import HttpResponse
+from .forms import UserRegister
+from .models import *
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+
+# Create your views here.
+
 
 def platform(request):
     title = "Главная страница"
@@ -40,9 +50,6 @@ def cart(request):
         'text_3': text_3,
     }
     return render(request, 'cart.html', context)
-
-# Теперь уже ненужный список...
-# users = ["Sergey", "Dmitriy", "Maria", "Polina"]
 
 
 def sign_up_by_django(request):
@@ -86,3 +93,17 @@ def sign_up_by_django(request):
             'form': form,
         }
         return render(request, 'registration_page.html', context)
+
+
+def post_list(request):
+    posts = Post.objects.all().order_by('-created_at')
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_posts = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_posts = paginator.page(1)
+    except EmptyPage:
+        page_posts = paginator.page(paginator.num_pages)
+
+    return render(request, 'post_list.html', {'page_posts': page_posts})
