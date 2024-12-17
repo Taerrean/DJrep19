@@ -3,13 +3,6 @@ from django.http import HttpResponse
 from .forms import UserRegister
 from .models import *
 
-# Create your views here.
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import UserRegister
-from .models import *
-
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -50,6 +43,9 @@ def cart(request):
         'text_3': text_3,
     }
     return render(request, 'cart.html', context)
+
+# Теперь уже ненужный список...
+# users = ["Sergey", "Dmitriy", "Maria", "Polina"]
 
 
 def sign_up_by_django(request):
